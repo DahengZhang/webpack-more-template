@@ -16,7 +16,12 @@ module.exports = merge(common, {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
+          {
+            loader: 'style-loader',
+            options: {
+              singleton: true
+            }
+          },
           {
             loader: 'css-loader',
             options: {
@@ -32,7 +37,12 @@ module.exports = merge(common, {
         test: /\.scss$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
+          {
+            loader: 'style-loader',
+            options: {
+              singleton: true
+            }
+          },
           {
             loader: 'css-loader',
             options: {

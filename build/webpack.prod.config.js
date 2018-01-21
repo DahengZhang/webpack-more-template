@@ -15,7 +15,12 @@ module.exports = merge(common, {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
+          fallback: {
+            loader: 'style-loader',
+            options: {
+              singleton: true
+            }
+          },
           use: [
             {
               loader: 'css-loader',
@@ -32,7 +37,12 @@ module.exports = merge(common, {
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
+          fallback: {
+            loader: 'style-loader',
+            options: {
+              singleton: true
+            }
+          },
           use: [
             {
               loader: 'css-loader',
@@ -51,7 +61,10 @@ module.exports = merge(common, {
   },
   plugins: [
     new UglifyJSPlugin(), // 移除上下文中的未引用代码
-    new ExtractTextPlugin('css/[name].bundle.[hash:6].css'),
+    new ExtractTextPlugin({ // 提取CSS
+      filename: 'css/[name].bundle.[hash:6].css',
+      allChunks: false // 取消打包异步加载的模块
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
       minChunks: 2,
